@@ -13,6 +13,23 @@ public class CpioEntry implements Cloneable {
 	private String name;
 	private long size;
 	
+	/* File types from /usr/include/bits/stat.h */
+	/** Directory.  */
+	public static final int S_IFDIR  = 0040000;
+	/** Character device.  */
+	public static final int S_IFCHR  = 0020000;
+	/** Block device.  */
+	public static final int S_IFBLK  = 0060000;
+	/** Regular file.  */
+	public static final int S_IFREG  = 0100000;
+	/** FIFO.  */
+	public static final int S_IFIFO  = 0010000; 
+	/** Symbolic link.  */
+	public static final int S_IFLNK  = 0120000;
+	/** Socket.  */
+	public static final int S_IFSOCK = 0140000; 
+
+	
 	public CpioEntry(String name) throws NullPointerException, IllegalArgumentException {
 		
 	}
@@ -22,8 +39,7 @@ public class CpioEntry implements Cloneable {
 	}
 	
 	public boolean isDirectory() {
-		// TODO Is this correct ?
-		return (this.getMode() & 0xF00) == 0x500;
+		return (this.getMode() & S_IFDIR) != 0;
 	}
 	
 	public Object clone() {
@@ -112,6 +128,10 @@ public class CpioEntry implements Cloneable {
 
 	public void setUid(int uid) {
 		this.uid = uid;
+	}
+
+	public boolean isFile() {
+		return (this.getMode() & S_IFREG) != 0;
 	}
 
 }
