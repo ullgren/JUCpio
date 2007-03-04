@@ -77,6 +77,7 @@ public class CpioFile {
 		ByteBuffer headerBuf;
 		int len;
 		
+
 		while ( readNextFile ) {
 			headerBuf = ByteBuffer.allocate(26);
 			len = cpioChannel.read(headerBuf);
@@ -141,12 +142,6 @@ public class CpioFile {
 			ByteBuffer nameBuf = ByteBuffer.allocate(readSize);
 			len = cpioChannel.read(nameBuf);
 			e.setName(new String(nameBuf.array(), 0, nameSize-1));
-			
-			/*
-			System.out.println("name: " + e.getName());
-			System.out.println("size: " + e.getSize());
-			System.out.println("mtime: " + (new SimpleDateFormat()).format(new Date(e.getTime())));
-			*/
 			
 			if ( e.getName().equals("TRAILER!!!") && e.getSize() == 0) {
 				readNextFile = false;

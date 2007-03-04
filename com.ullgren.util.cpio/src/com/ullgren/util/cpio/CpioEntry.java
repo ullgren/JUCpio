@@ -2,16 +2,16 @@ package com.ullgren.util.cpio;
 
 public class CpioEntry implements Cloneable {
 	
-	int device;
-	int inode;
-	int mode;
-	int uid;
-	int gid;
-	int nlink;
-	int rdev;
-	long time;
-	String name;
-	long size;
+	private int device;
+	private int inode;
+	private int mode;
+	private int uid;
+	private int gid;
+	private int nlink;
+	private int rdev;
+	private long time;
+	private String name;
+	private long size;
 	
 	public CpioEntry(String name) throws NullPointerException, IllegalArgumentException {
 		
@@ -22,13 +22,16 @@ public class CpioEntry implements Cloneable {
 	}
 	
 	public boolean isDirectory() {
-		// TODO Implement
-		return false;
+		// TODO Is this correct ?
+		return (this.getMode() & 0xF00) == 0x500;
 	}
 	
 	public Object clone() {
-		// TODO Implement
-		return null;
+		CpioEntry ce = null;
+		try {
+			ce = (CpioEntry)super.clone();
+		} catch (CloneNotSupportedException e) {} // Won't happen
+		return ce;
 	}
 
 	public int getDevice() {
